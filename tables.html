@@ -529,34 +529,34 @@
     </div>
     <script>
         function fetchData() {
-    const uniqueId = document.getElementById('uniqueId').value;
+            const uniqueId = document.getElementById('uniqueId').value;
 
-    // Replace 'xxx' with your actual subscription key
-    const subscriptionKey = '8c89b764b1654cfab1834eb9c105be05';
+            // Replace 'xxx' with your actual subscription key
+            const subscription = '8c89b764b1654cfab1834eb9c105be05';
 
-    fetch(`https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund`, {
-        headers: {
-            'Ocp-Apim-Subscription-Key': subscriptionKey
+            fetch(`https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund`, {
+                headers: {
+                    'Ocp-Apim-Subscription-Key': subscription
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    displayData(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    // Handle error display or logging
+                });
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        displayData(data);
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-        // Handle error display or logging
-    });
-}
 
-function displayData(data) {
-    const tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = ''; // Clear previous table content
+        function displayData(data) {
+            const tableBody = document.getElementById('table-body-under');
+            tableBody.innerHTML = ''; // Clear previous table content
 
-    // Loop through the data and populate the table
-    data.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
+            // Loop through the data and populate the table
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
             <td>${item.proj_id}</td>
             <td>${item.regis_id}</td>
             <td>${item.regis_date}</td>
@@ -567,9 +567,9 @@ function displayData(data) {
             <td>${item.unique_id}</td>
             <td>${item.last_upd_date}</td>
         `;
-        tableBody.appendChild(row);
-    });
-}
+                tableBody.appendChild(row);
+            });
+        }
 
     </script>
 
