@@ -467,86 +467,39 @@
         const subscriptionKey = '8c89b764b1654cfab1834eb9c105be05';
         const apiUrl = 'https://api.sec.or.th/pvd/factsheet/amc';
 
-        // fetch(apiUrl, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Ocp-Apim-Subscription-Key': subscriptionKey
-        //     }
-        // })
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         const tableBody = document.querySelector('#data-table tbody');
+        fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Ocp-Apim-Subscription-Key': subscriptionKey
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Assuming the data is an array of objects with keys corresponding to table headers
 
-        //         // Display only the first 10 rows
-        //         const rowsToDisplay = data.slice(0, 10);
+                const tableBody = document.querySelector('#data-table tbody');
+                data.forEach(item => {
+                    const row = document.createElement('tr');
 
-        //         rowsToDisplay.forEach(item => {
-        //             const row = document.createElement('tr');
+                    // Populate table cells based on keys from the data
+                    const keys = ['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date'];
+                    keys.forEach(key => {
+                        const cell = document.createElement('td');
+                        cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
+                        row.appendChild(cell);
+                    });
 
-        //             // Assuming 'item' is an object with keys corresponding to table headers
-        //             const keys = ['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date'];
-        //             keys.forEach(key => {
-        //                 const cell = document.createElement('td');
-        //                 cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
-        //                 row.appendChild(cell);
-        //             });
-
-        //             tableBody.appendChild(row);
-        //         });
-        //     })
-        //     .catch(error => {
-        //         console.error('There was a problem with the fetch operation:', error);
-        //     });
-
-        const dataPerPage = 10; // Number of rows to display per page
-        let currentPage = 1; // Current page
-
-        // Function to display the data based on the current page
-        function displayData(page) {
-            const tableBody = document.querySelector('#data-table tbody');
-            tableBody.innerHTML = ''; // Clear previous rows
-
-            const start = (page - 1) * dataPerPage;
-            const end = start + dataPerPage;
-            const rowsToDisplay = data.slice(start, end); // Assuming 'data' is your array of rows
-
-            rowsToDisplay.forEach(item => {
-                const row = document.createElement('tr');
-                // Populate table cells based on keys from the data
-                const keys = ['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date'];
-                keys.forEach(key => {
-                    const cell = document.createElement('td');
-                    cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
-                    row.appendChild(cell);
+                    tableBody.appendChild(row);
                 });
-                tableBody.appendChild(row);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
             });
-        }
-
-        // Function to handle next page button click
-        document.getElementById('nextButton').addEventListener('click', function () {
-            const totalPages = Math.ceil(data.length / dataPerPage);
-            if (currentPage < totalPages) {
-                currentPage++;
-                displayData(currentPage);
-            }
-        });
-
-        // Function to handle previous page button click
-        document.getElementById('prevButton').addEventListener('click', function () {
-            if (currentPage > 1) {
-                currentPage--;
-                displayData(currentPage);
-            }
-        });
-
-        // Initial display of data (first page)
-        displayData(currentPage);
     </script>
 
     <script>
