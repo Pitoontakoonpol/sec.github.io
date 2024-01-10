@@ -3,20 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>SEC Thailand API Report</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
 </head>
 <body>
   <h1>SEC Thailand API Report</h1>
@@ -36,32 +22,7 @@
 
     function displayData(data) {
       const reportElement = document.getElementById('report');
-      const table = document.createElement('table');
-
-      // Define columns to display
-      const columns = ["unique_id", "name_th", "name_en", "abbr_name", "last_upd_date"];
-
-      // Create table headers
-      const headerRow = document.createElement('tr');
-      columns.forEach(headerText => {
-        const header = document.createElement('th');
-        header.textContent = headerText;
-        headerRow.appendChild(header);
-      });
-      table.appendChild(headerRow);
-
-      // Create table rows with data
-      data.forEach(rowData => {
-        const row = document.createElement('tr');
-        columns.forEach(column => {
-          const cell = document.createElement('td');
-          cell.textContent = rowData[column];
-          row.appendChild(cell);
-        });
-        table.appendChild(row);
-      });
-
-      reportElement.appendChild(table);
+      reportElement.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
     }
 
     window.onload = fetchData;
