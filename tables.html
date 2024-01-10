@@ -416,6 +416,66 @@
             </div>
             <!-- End of Main Content -->
 
+            <!-- Content -->
+            <div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">กองทุนภายใต้การบริหารจัดการของบริษัทหลักทรัพย์จัดการกองทุน</h1>
+                    <p class="mb-4">ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ <a target="_blank"
+                            href="https://api-portal.sec.or.th/product#product=pvd-factsheet-dev">PVD Factsheet</a>.<br>
+                        เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
+                        - กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
+                        - กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
+                    </p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">SEC API Thailand Report</h6>
+                        </div>
+                        <div class="card-body">
+                            <input type="text" id="uniqueIdInput" placeholder="Enter Unique ID">
+                            <button id="submitButton">Submit</button>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="data-table-under" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>unique_id</th>
+                                            <th>name_th</th>
+                                            <th>name_en</th>
+                                            <th>abbr_name</th>
+                                            <th>last_upd_date date</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>unique_id</th>
+                                            <th>name_th</th>
+                                            <th>name_en</th>
+                                            <th>abbr_name</th>
+                                            <th>last_upd_date date</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!-- Pagination buttons -->
+                                <button id="prevButton">Previous</button>
+                                <button id="nextButton">Next</button>
+
+                                <!-- Add an export button -->
+                                <button class="btn btn-success btn-sm" onclick="exportToXLSX()">Export to XLSX</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
