@@ -467,41 +467,41 @@
         const subscriptionKey = '8c89b764b1654cfab1834eb9c105be05';
         const apiUrl = 'https://api.sec.or.th/pvd/factsheet/amc';
 
-        fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-                'Ocp-Apim-Subscription-Key': subscriptionKey
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const tableBody = document.querySelector('#data-table tbody');
+        // fetch(apiUrl, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Ocp-Apim-Subscription-Key': subscriptionKey
+        //     }
+        // })
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         const tableBody = document.querySelector('#data-table tbody');
 
-                // Display only the first 10 rows
-                const rowsToDisplay = data.slice(0, 10);
+        //         // Display only the first 10 rows
+        //         const rowsToDisplay = data.slice(0, 10);
 
-                rowsToDisplay.forEach(item => {
-                    const row = document.createElement('tr');
+        //         rowsToDisplay.forEach(item => {
+        //             const row = document.createElement('tr');
 
-                    // Assuming 'item' is an object with keys corresponding to table headers
-                    const keys = ['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date'];
-                    keys.forEach(key => {
-                        const cell = document.createElement('td');
-                        cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
-                        row.appendChild(cell);
-                    });
+        //             // Assuming 'item' is an object with keys corresponding to table headers
+        //             const keys = ['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date'];
+        //             keys.forEach(key => {
+        //                 const cell = document.createElement('td');
+        //                 cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
+        //                 row.appendChild(cell);
+        //             });
 
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
+        //             tableBody.appendChild(row);
+        //         });
+        //     })
+        //     .catch(error => {
+        //         console.error('There was a problem with the fetch operation:', error);
+        //     });
 
         const dataPerPage = 10; // Number of rows to display per page
         let currentPage = 1; // Current page
