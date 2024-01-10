@@ -212,11 +212,11 @@
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i> -->
-                                <!-- Counter - Alerts -->
-                                <!-- <span class="badge badge-danger badge-counter">3+</span>
+                        <!-- Counter - Alerts -->
+                        <!-- <span class="badge badge-danger badge-counter">3+</span>
                             </a> -->
-                            <!-- Dropdown - Alerts -->
-                            <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        <!-- Dropdown - Alerts -->
+                        <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Alerts Center
@@ -263,11 +263,11 @@
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i> -->
-                                <!-- Counter - Messages -->
-                                <!-- <span class="badge badge-danger badge-counter">7</span>
+                        <!-- Counter - Messages -->
+                        <!-- <span class="badge badge-danger badge-counter">7</span>
                             </a> -->
-                            <!-- Dropdown - Messages -->
-                            <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        <!-- Dropdown - Messages -->
+                        <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
                                     Message Center
@@ -442,29 +442,37 @@
                                 <table class="table table-bordered" id="data-table-under" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>proj_id</th>
+                                            <th>regis_id</th>
+                                            <th>regis_date</th>
+                                            <th>cancel_date</th>
+                                            <th>proj_name_th</th>
+                                            <th>fund_type</th>
+                                            <th>fund_status</th>
                                             <th>unique_id</th>
-                                            <th>name_th</th>
-                                            <th>name_en</th>
-                                            <th>abbr_name</th>
-                                            <th>last_upd_date date</th>
+                                            <th>last_upd_date</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>proj_id</th>
+                                            <th>regis_id</th>
+                                            <th>regis_date</th>
+                                            <th>cancel_date</th>
+                                            <th>proj_name_th</th>
+                                            <th>fund_type</th>
+                                            <th>fund_status</th>
                                             <th>unique_id</th>
-                                            <th>name_th</th>
-                                            <th>name_en</th>
-                                            <th>abbr_name</th>
-                                            <th>last_upd_date date</th>
+                                            <th>last_upd_date</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
+                                    <tbody id="table-body-under">
 
                                     </tbody>
                                 </table>
                                 <!-- Pagination buttons -->
-                                <button id="prevButton">Previous</button>
-                                <button id="nextButton">Next</button>
+                                <button id="prevButtonUnder">Previous</button>
+                                <button id="nextButtonUnder">Next</button>
 
                                 <!-- Add an export button -->
                                 <button class="btn btn-success btn-sm" onclick="exportToXLSX()">Export to XLSX</button>
@@ -516,6 +524,62 @@
             </div>
         </div>
     </div>
+    <script>
+        const apiKey = '8c89b764b1654cfab1834eb9c105be05'; // Replace with your API key
+        let uniqueId = ''; // To store the user inputted unique ID
+        let apiUrlFund = ''; // API URL with placeholder for unique ID
+        let pageNumber = 1; // To keep track of the page number
+        async function fetchData(page) {
+            try {
+                const response = await fetch(`${apiUrlFund}?page=${page}`, {
+                    headers: {
+                        'Ocp-Apim-Subscription-Key': apiKey
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    displayData(data);
+                } else {
+                    console.error('Failed to fetch data');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function displayData(data) {
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '';
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                // Populate table cells with API response data
+                row.innerHTML = `
+      <td>${item.property1}</td>
+      <td>${item.property2}</td>
+      <!-- Add more cells based on your API response properties -->
+    `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        document.getElementById('submitButton').addEventListener('click', () => {
+            uniqueId = document.getElementById('uniqueIdInput').value.trim();
+            if (uniqueId !== '') {
+                apiUrl = `https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund`;
+                pageNumber = 1; // Reset page number when submitting new ID
+                fetchData(pageNumber);
+            } else {
+                console.error('Please enter a valid Unique ID');
+            }
+        });
+
+        document.getElementById('next-page').addEventListener('click', () => {
+            pageNumber++;
+            fetchData(pageNumber);
+        });
+    </script>
 
     <script>
         const subscriptionKey = '8c89b764b1654cfab1834eb9c105be05';
