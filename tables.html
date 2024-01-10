@@ -525,43 +525,44 @@
         </div>
     </div>
     <script>
-        const apiKey = '8c89b764b1654cfab1834eb9c105be05'; // Replace with your API key
+        const subscription = '8c89b764b1654cfab1834eb9c105be05';
+        let apiUrlFund = '';
         let uniqueId = ''; // To store the user inputted unique ID
-        let apiUrlFund = ''; // API URL with placeholder for unique ID
         let pageNumber = 1; // To keep track of the page number
-        async function fetchData(page) {
-            try {
-                const response = await fetch(`${apiUrlFund}?page=${page}`, {
-                    headers: {
-                        'Ocp-Apim-Subscription-Key': apiKey
-                    }
-                });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    displayData(data);
-                } else {
-                    console.error('Failed to fetch data');
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
+        fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Ocp-Apim-Subscription-Key': subscription
             }
-        }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Assuming the data is an array of objects with keys corresponding to table headers
 
-        function displayData(data) {
-            const tableBody = document.getElementById('table-body-under');
-            tableBody.innerHTML = '';
+                const tableBody = document.querySelector('#data-table-under tbody');
+                data.forEach(item => {
+                    const row = document.createElement('tr');
 
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                // Populate table cells with API response data
-                row.innerHTML = `
-      <td>${item.property1}</td>
-      <!-- Add more cells based on your API response properties -->
-    `;
-                tableBody.appendChild(row);
+                    // Populate table cells based on keys from the data
+                    const keys = ['proj_id', 'regis_id', 'regis_date', 'cancel_date', 'proj_name_th', 'fund_type', 'fund_status', 'fund_status', 'unique_id', 'last_upd_date'];
+                    keys.forEach(key => {
+                        const cell = document.createElement('td');
+                        cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
+                        row.appendChild(cell);
+                    });
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
             });
-        }
 
         document.getElementById('submitButton').addEventListener('click', () => {
             uniqueId = document.getElementById('uniqueIdInput').value.trim();
