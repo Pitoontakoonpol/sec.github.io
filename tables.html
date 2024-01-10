@@ -575,6 +575,74 @@
                 <!-- /.container-fluid -->
             </div>
 
+            <!-- Content -->
+            <div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">ผลตอบแทนย้อนหลัง</h1>
+                    <p class="mb-4">ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ <a target="_blank"
+                            href="https://api-portal.sec.or.th/product#product=pvd-factsheet-dev">PVD Factsheet</a>.<br>
+                        เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
+                        - กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
+                        - กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
+                    </p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">SEC API Thailand Report</h6>
+                        </div>
+                        <div class="card-body">
+
+                            <label for="projid">Enter Project ID:</label>
+                            <input type="text" id="projid">
+                            <button onclick="fetchDataReturn()">Get Data</button>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="data-table-return" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>proj_id</th>
+                                            <th>policy_id</th>
+                                            <th>unique_sub_policy_id</th>
+                                            <th>seq</th>
+                                            <th>return_year</th>
+                                            <th>return_rate</th>
+                                            <th>last_upd_date</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>proj_id</th>
+                                            <th>policy_id</th>
+                                            <th>unique_sub_policy_id</th>
+                                            <th>seq</th>
+                                            <th>return_year</th>
+                                            <th>return_rate</th>
+                                            <th>last_upd_date</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody id="table-body-return">
+
+                                    </tbody>
+                                </table>
+                                <!-- Pagination buttons -->
+                                <button id="prevButtonUnder">Previous</button>
+                                <button id="nextButtonUnder">Next</button>
+
+                                <!-- Add an export button -->
+                                <button class="btn btn-success btn-sm" onclick="exportToXLSXReturn()">Export to
+                                    XLSX</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -615,6 +683,55 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function fetchDataReturn() {
+    const projId = document.getElementById('projid').value;
+
+    // Replace 'xxx' with your actual subscription key
+    const subscriptionReturn = 'YOUR_SUBSCRIPTION_KEY';
+
+    fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/return`, {
+        headers: {
+            'Ocp-Apim-Subscription-Key': subscriptionReturn
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        displayDataReturn(data);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+        // Handle error display or logging
+    });
+}
+
+function displayDataReturn(data) {
+    const tableBody = document.getElementById('table-body-return');
+    tableBody.innerHTML = ''; // Clear previous table content
+
+    // Loop through the data and populate the table
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.proj_id}</td>
+            <td>${item.policy_id}</td>
+            <td>${item.unique_sub_policy_id}</td>
+            <td>${item.seq}</td>
+            <td>${item.return_year}</td>
+            <td>${item.return_rate}</td>
+            <td>${item.last_upd_date}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+    </script>
 
     <script>
         function fetchDataPolicy() {
@@ -784,6 +901,34 @@
         }
 
     </script>
+
+
+<script>
+    function exportToXLSXReturn() {
+        const table = document.getElementById('data-table-return'); // Assuming your table has id="data-table"
+        const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
+        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+        function s2ab(s) {
+            const buf = new ArrayBuffer(s.length);
+            const view = new Uint8Array(buf);
+            for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+            return buf;
+        }
+
+        const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+        /* 
+          Create a link element and trigger a download programmatically.
+          This will prompt the user to save the generated XLSX file.
+        */
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'SEC_API_Thailand_Report.xlsx';
+        link.click();
+    }
+
+</script>
 
     <script>
         function exportToXLSXUnder() {
