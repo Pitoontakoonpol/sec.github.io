@@ -406,6 +406,10 @@
 
                                     </tbody>
                                 </table>
+                                <!-- Pagination buttons -->
+                                <button id="prevButton">Previous</button>
+                                <button id="nextButton">Next</button>
+
                                 <!-- Add an export button -->
                                 <button onclick="exportToXLSX()">Export to XLSX</button>
                             </div>
@@ -524,6 +528,54 @@
             link.download = 'table_data.xlsx';
             link.click();
         }
+
+    </script>
+
+    <script>
+        const dataPerPage = 10; // Number of rows to display per page
+        let currentPage = 1; // Current page
+
+        // Function to display the data based on the current page
+        function displayData(page) {
+            const tableBody = document.querySelector('#data-table tbody');
+            tableBody.innerHTML = ''; // Clear previous rows
+
+            const start = (page - 1) * dataPerPage;
+            const end = start + dataPerPage;
+            const rowsToDisplay = data.slice(start, end); // Assuming 'data' is your array of rows
+
+            rowsToDisplay.forEach(item => {
+                const row = document.createElement('tr');
+                // Populate table cells based on keys from the data
+                const keys = ['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date'];
+                keys.forEach(key => {
+                    const cell = document.createElement('td');
+                    cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
+                    row.appendChild(cell);
+                });
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to handle next page button click
+        document.getElementById('nextButton').addEventListener('click', function () {
+            const totalPages = Math.ceil(data.length / dataPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayData(currentPage);
+            }
+        });
+
+        // Function to handle previous page button click
+        document.getElementById('prevButton').addEventListener('click', function () {
+            if (currentPage > 1) {
+                currentPage--;
+                displayData(currentPage);
+            }
+        });
+
+        // Initial display of data (first page)
+        displayData(currentPage);
 
     </script>
 
