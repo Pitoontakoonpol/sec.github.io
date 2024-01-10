@@ -436,8 +436,11 @@
                             <h6 class="m-0 font-weight-bold text-primary">SEC API Thailand Report</h6>
                         </div>
                         <div class="card-body">
-                            <input type="text" id="uniqueIdInput" placeholder="Enter Unique ID">
-                            <button id="submitButton">Submit</button>
+
+                            <label for="uniqueId">Enter Unique ID:</label>
+                            <input type="text" id="uniqueId">
+                            <button onclick="fetchData()">Get Data</button>
+
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="data-table-under" width="100%" cellspacing="0">
                                     <thead>
@@ -525,60 +528,49 @@
         </div>
     </div>
     <script>
-        const subscription = '8c89b764b1654cfab1834eb9c105be05';
-        let apiUrlFund = '';
-        let uniqueId = ''; // To store the user inputted unique ID
-        let pageNumber = 1; // To keep track of the page number
+        function fetchData() {
+    const uniqueId = document.getElementById('uniqueId').value;
 
-        fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-                'Ocp-Apim-Subscription-Key': subscription
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Assuming the data is an array of objects with keys corresponding to table headers
+    // Replace 'xxx' with your actual subscription key
+    const subscriptionKey = '8c89b764b1654cfab1834eb9c105be05';
 
-                const tableBody = document.querySelector('#data-table-under tbody');
-                data.forEach(item => {
-                    const row = document.createElement('tr');
+    fetch(`https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund`, {
+        headers: {
+            'Ocp-Apim-Subscription-Key': subscriptionKey
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayData(data);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+        // Handle error display or logging
+    });
+}
 
-                    // Populate table cells based on keys from the data
-                    const keys = ['proj_id', 'regis_id', 'regis_date', 'cancel_date', 'proj_name_th', 'fund_type', 'fund_status', 'fund_status', 'unique_id', 'last_upd_date'];
-                    keys.forEach(key => {
-                        const cell = document.createElement('td');
-                        cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
-                        row.appendChild(cell);
-                    });
+function displayData(data) {
+    const tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = ''; // Clear previous table content
 
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
+    // Loop through the data and populate the table
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.proj_id}</td>
+            <td>${item.regis_id}</td>
+            <td>${item.regis_date}</td>
+            <td>${item.cancel_date}</td>
+            <td>${item.proj_name_th}</td>
+            <td>${item.fund_type}</td>
+            <td>${item.fund_status}</td>
+            <td>${item.unique_id}</td>
+            <td>${item.last_upd_date}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
 
-        document.getElementById('submitButton').addEventListener('click', () => {
-            uniqueId = document.getElementById('uniqueIdInput').value.trim();
-            if (uniqueId !== '') {
-                apiUrlFund = `https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund`;
-                pageNumber = 1; // Reset page number when submitting new ID
-                fetchData(pageNumber);
-            } else {
-                console.error('Please enter a valid Unique ID');
-            }
-        });
-
-        document.getElementById('next-page').addEventListener('click', () => {
-            pageNumber++;
-            fetchData(pageNumber);
-        });
     </script>
 
     <script>
