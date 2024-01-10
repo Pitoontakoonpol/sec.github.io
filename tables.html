@@ -372,8 +372,8 @@
                     <p class="mb-4">ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ <a target="_blank"
                             href="https://api-portal.sec.or.th/product#product=pvd-factsheet-dev">PVD Factsheet</a>.<br>
                         เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
-                        กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
-                        กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
+                        - กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
+                        - กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
                     </p>
 
                     <!-- DataTales Example -->
@@ -502,36 +502,7 @@
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
-    </script>
 
-    <script>
-        function exportToXLSX() {
-            const table = document.getElementById('data-table'); // Assuming your table has id="data-table"
-            const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
-            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-            function s2ab(s) {
-                const buf = new ArrayBuffer(s.length);
-                const view = new Uint8Array(buf);
-                for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-                return buf;
-            }
-
-            const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-
-            /* 
-              Create a link element and trigger a download programmatically.
-              This will prompt the user to save the generated XLSX file.
-            */
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'table_data.xlsx';
-            link.click();
-        }
-
-    </script>
-
-    <script>
         const dataPerPage = 10; // Number of rows to display per page
         let currentPage = 1; // Current page
 
@@ -576,6 +547,32 @@
 
         // Initial display of data (first page)
         displayData(currentPage);
+    </script>
+
+    <script>
+        function exportToXLSX() {
+            const table = document.getElementById('data-table'); // Assuming your table has id="data-table"
+            const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
+            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            function s2ab(s) {
+                const buf = new ArrayBuffer(s.length);
+                const view = new Uint8Array(buf);
+                for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+                return buf;
+            }
+
+            const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+            /* 
+              Create a link element and trigger a download programmatically.
+              This will prompt the user to save the generated XLSX file.
+            */
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'table_data.xlsx';
+            link.click();
+        }
 
     </script>
 
