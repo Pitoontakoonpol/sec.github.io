@@ -549,7 +549,7 @@
         }
 
         function displayData(data) {
-            const tableBody = document.getElementById('table-body');
+            const tableBody = document.getElementById('table-body-under');
             tableBody.innerHTML = '';
 
             data.forEach(item => {
@@ -567,7 +567,7 @@
         document.getElementById('submitButton').addEventListener('click', () => {
             uniqueId = document.getElementById('uniqueIdInput').value.trim();
             if (uniqueId !== '') {
-                apiUrl = `https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund`;
+                apiUrlFund = `https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund`;
                 pageNumber = 1; // Reset page number when submitting new ID
                 fetchData(pageNumber);
             } else {
