@@ -565,7 +565,7 @@
                                 <button id="nextButtonUnder">Next</button>
 
                                 <!-- Add an export button -->
-                                <button class="btn btn-success btn-sm" onclick="exportToXLSXPolivy()">Export to
+                                <button class="btn btn-success btn-sm" onclick="exportToXLSXPolicy()">Export to
                                     XLSX</button>
                             </div>
                         </div>
@@ -630,7 +630,7 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    displayData(data);
+                    displayDataPolicy(data);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -638,7 +638,7 @@
                 });
         }
 
-        function displayData(data) {
+        function displayDataPolicy(data) {
             const tableBody = document.getElementById('table-body-policy');
             tableBody.innerHTML = ''; // Clear previous table content
 
