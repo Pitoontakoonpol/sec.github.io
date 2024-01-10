@@ -992,6 +992,33 @@
             });
     </script>
 
+<script>
+    function exportToXLSXFee() {
+        const table = document.getElementById('data-table-fee'); // Assuming your table has id="data-table"
+        const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
+        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+        function s2ab(s) {
+            const buf = new ArrayBuffer(s.length);
+            const view = new Uint8Array(buf);
+            for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+            return buf;
+        }
+
+        const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+        /* 
+          Create a link element and trigger a download programmatically.
+          This will prompt the user to save the generated XLSX file.
+        */
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'SEC_API_Thailand_Report.xlsx';
+        link.click();
+    }
+
+</script>
+
     <script>
         function exportToXLSX() {
             const table = document.getElementById('data-table'); // Assuming your table has id="data-table"
