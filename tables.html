@@ -378,29 +378,27 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="data-table" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>unique_id</th>
+                                            <th>name_th</th>
+                                            <th>name_en</th>
+                                            <th>abbr_name</th>
+                                            <th>last_upd_date date</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>unique_id</th>
+                                            <th>name_th</th>
+                                            <th>name_en</th>
+                                            <th>abbr_name</th>
+                                            <th>last_upd_date date</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
+                                        <!-- <tr>
                                             <td>Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
@@ -423,7 +421,7 @@
                                             <td>66</td>
                                             <td>2009/01/12</td>
                                             <td>$86,000</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -476,6 +474,45 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const subscriptionKey = '8c89b764b1654cfab1834eb9c105be05';
+        const apiUrl = 'https://api.sec.or.th/pvd/factsheet/amc';
+    
+        fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Ocp-Apim-Subscription-Key': subscriptionKey
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Assuming the data is an array of objects with keys corresponding to table headers
+    
+          const tableBody = document.querySelector('#data-table tbody');
+          data.forEach(item => {
+            const row = document.createElement('tr');
+    
+            // Populate table cells based on keys from the data
+            const keys = ['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date'];
+            keys.forEach(key => {
+              const cell = document.createElement('td');
+              cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
+              row.appendChild(cell);
+            });
+    
+            tableBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+      </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
