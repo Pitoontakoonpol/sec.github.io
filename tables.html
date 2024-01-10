@@ -616,35 +616,35 @@
 
     <script>
         function fetchDataPolicy() {
-            const projId = document.getElementById('projId').value;
+    const projId = document.getElementById('projId').value;
 
-            // Replace 'xxx' with your actual subscription key
-            const subscriptionpolicy = '8c89b764b1654cfab1834eb9c105be05';
+    // Replace 'xxx' with your actual subscription key
+    const subscriptionKey = '8c89b764b1654cfab1834eb9c105be05';
 
-            fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/policy`, {
-                headers: {
-                    'Ocp-Apim-Subscription-Key': subscriptionpolicy
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    displayData(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    // Handle error display or logging
-                });
+    fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/policy`, {
+        headers: {
+            'Ocp-Apim-Subscription-Key': subscriptionKey
         }
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayData(data);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+        // Handle error display or logging
+    });
+}
 
-        function displayData(data) {
-            const tableBody = document.getElementById('table-body-policy');
-            tableBody.innerHTML = ''; // Clear previous table content
+function displayData(data) {
+    const tableBody = document.getElementById('table-body-policy');
+    tableBody.innerHTML = ''; // Clear previous table content
 
-            // Loop through the data and populate the table
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                <td>${item.proj_id}</td>
+    // Loop through the data and populate the table
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.proj_id}</td>
             <td>${item.policy_id}</td>
             <td>${item.unique_sub_policy_id}</td>
             <td>${item.sub_policy_id}</td>
@@ -660,9 +660,9 @@
             <td>${item.new_member_offer}</td>
             <td>${item.last_upd_date}</td>
         `;
-                tableBody.appendChild(row);
-            });
-        }
+        tableBody.appendChild(row);
+    });
+}
 
     </script>
 
