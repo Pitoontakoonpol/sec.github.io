@@ -759,7 +759,7 @@
             // Replace 'xxx' with your actual subscription key
             const subscriptionFee = '8c89b764b1654cfab1834eb9c105be05';
 
-            fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/return`, {
+            fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/fee`, {
                 headers: {
                     'Ocp-Apim-Subscription-Key': subscriptionFee
                 }
@@ -785,8 +785,8 @@
 
             // Loop through the data and populate the table
             data.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
+                const row = document.createElement('tr');
+                row.innerHTML = `
             <td>${item.proj_id}</td>
             <td>${item.policy_id}</td>
             <td>${item.unique_sub_policy_id}</td>
