@@ -711,6 +711,74 @@
                 <!-- /.container-fluid -->
             </div>
 
+            <!-- Content -->
+            <div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">สัดส่วนของการลงทุนของกองทุนสำรองเลี้ยงชีพ</h1>
+                    <p class="mb-4">ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ <a target="_blank"
+                            href="https://api-portal.sec.or.th/product#product=pvd-factsheet-dev">PVD Factsheet</a>.<br>
+                        เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
+                        - กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
+                        - กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
+                    </p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">SEC API Thailand Report</h6>
+                        </div>
+                        <div class="card-body">
+
+                            <label for="projId">Enter Project ID:</label>
+                            <input type="text" id="projId">
+                            <label for="period">Enter Period:</label>
+                            <input type="text" id="period">
+                            <button onclick="fetchDataPeriod()">Get Data</button>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="data-table-period" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>period</th>
+                                            <th>proj_id</th>
+                                            <th>assetliab_code</th>
+                                            <th>market_value</th>
+                                            <th>nav</th>
+                                            <th>percent_nav</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>period</th>
+                                            <th>proj_id</th>
+                                            <th>assetliab_code</th>
+                                            <th>market_value</th>
+                                            <th>nav</th>
+                                            <th>percent_nav</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody id="table-body-period">
+
+                                    </tbody>
+                                </table>
+                                <!-- Pagination buttons -->
+                                <button id="prevButtonUnder">Previous</button>
+                                <button id="nextButtonUnder">Next</button>
+
+                                <!-- Add an export button -->
+                                <button class="btn btn-success btn-sm" onclick="exportToXLSXPeriod()">Export to
+                                    XLSX</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -751,6 +819,55 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function fetchDataPeriod() {
+            const projId = document.getElementById('projId').value;
+            const period = document.getElementById('period').value;
+
+            // Replace 'xxx' with your actual subscription key
+            const subscriptionKey = '8c89b764b1654cfab1834eb9c105be05';
+
+            fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/PVDFullPort/${period}`, {
+                headers: {
+                    'Ocp-Apim-Subscription-Key': subscriptionKey
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayDataPe(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    // Handle error display or logging
+                });
+        }
+
+        function displayDataPe(data) {
+            const tableBody = document.getElementById('table-body-period');
+            tableBody.innerHTML = ''; // Clear previous table content
+
+            // Loop through the data and populate the table
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+            <td>${item.period}</td>
+            <td>${item.proj_id}</td>
+            <td>${item.assetliab_code}</td>
+            <td>${item.market_value}</td>
+            <td>${item.nav}</td>
+            <td>${item.percent_nav}</td>
+        `;
+                tableBody.appendChild(row);
+            });
+        }
+
+    </script>
 
     <script>
         function fetchDataFee() {
@@ -992,32 +1109,32 @@
             });
     </script>
 
-<script>
-    function exportToXLSXFee() {
-        const table = document.getElementById('data-table-fee'); // Assuming your table has id="data-table"
-        const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
-        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    <script>
+        function exportToXLSXFee() {
+            const table = document.getElementById('data-table-fee'); // Assuming your table has id="data-table"
+            const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
+            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
-        function s2ab(s) {
-            const buf = new ArrayBuffer(s.length);
-            const view = new Uint8Array(buf);
-            for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-            return buf;
+            function s2ab(s) {
+                const buf = new ArrayBuffer(s.length);
+                const view = new Uint8Array(buf);
+                for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+                return buf;
+            }
+
+            const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+            /* 
+              Create a link element and trigger a download programmatically.
+              This will prompt the user to save the generated XLSX file.
+            */
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'SEC_API_Thailand_Report.xlsx';
+            link.click();
         }
 
-        const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-
-        /* 
-          Create a link element and trigger a download programmatically.
-          This will prompt the user to save the generated XLSX file.
-        */
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'SEC_API_Thailand_Report.xlsx';
-        link.click();
-    }
-
-</script>
+    </script>
 
     <script>
         function exportToXLSX() {
