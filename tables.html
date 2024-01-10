@@ -132,7 +132,8 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-fw fa-table"></i>
                     <span>ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ</span>
                 </a>
@@ -279,8 +280,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -291,8 +291,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -303,8 +302,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -336,8 +334,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -374,10 +371,10 @@
                     <h1 class="h3 mb-2 text-gray-800">รายชื่อบริษัทหลักทรัพย์จัดการกองทุน</h1>
                     <p class="mb-4">ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ <a target="_blank"
                             href="https://api-portal.sec.or.th/product#product=pvd-factsheet-dev">PVD Factsheet</a>.<br>
-                            เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
-                            กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
-                            กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
-                        </p>
+                        เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
+                        กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
+                        กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
+                    </p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -463,41 +460,43 @@
     <script>
         const subscriptionKey = '8c89b764b1654cfab1834eb9c105be05';
         const apiUrl = 'https://api.sec.or.th/pvd/factsheet/amc';
-    
+
         fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-            'Ocp-Apim-Subscription-Key': subscriptionKey
-          }
+            method: 'GET',
+            headers: {
+                'Ocp-Apim-Subscription-Key': subscriptionKey
+            }
         })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          // Assuming the data is an array of objects with keys corresponding to table headers
-    
-          const tableBody = document.querySelector('#data-table tbody');
-          data.forEach(item => {
-            const row = document.createElement('tr');
-    
-            // Populate table cells based on keys from the data
-            const keys = ['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date'];
-            keys.forEach(key => {
-              const cell = document.createElement('td');
-              cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
-              row.appendChild(cell);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const tableBody = document.querySelector('#data-table tbody');
+
+                // Display only the first 10 rows
+                const rowsToDisplay = data.slice(0, 10);
+
+                rowsToDisplay.forEach(item => {
+                    const row = document.createElement('tr');
+
+                    // Assuming 'item' is an object with keys corresponding to table headers
+                    const keys = ['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date'];
+                    keys.forEach(key => {
+                        const cell = document.createElement('td');
+                        cell.textContent = item[key] !== undefined ? item[key] : ''; // Set cell text or empty string if undefined
+                        row.appendChild(cell);
+                    });
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
             });
-    
-            tableBody.appendChild(row);
-          });
-        })
-        .catch(error => {
-          console.error('There was a problem with the fetch operation:', error);
-        });
-      </script>
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
