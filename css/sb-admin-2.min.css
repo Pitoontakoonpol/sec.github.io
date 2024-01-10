@@ -12608,3 +12608,7 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
     width: 100%
 }
+
+.white-icon path {
+    fill: white;
+}
