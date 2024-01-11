@@ -501,291 +501,28 @@
 
             <!-- Content -->
             <div id="content">
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">นโยบายการลงทุนของกองทุนสำรองเลี้ยงชีพ</h1>
-                    <p class="mb-4">ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ <a target="_blank"
-                            href="https://api-portal.sec.or.th/product#product=pvd-factsheet-dev">PVD Factsheet</a>.<br>
-                        เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
-                        - กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
-                        - กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
-                    </p>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">SEC API Thailand Report</h6>
-                        </div>
-                        <div class="card-body">
-
-                            <label for="projId">Enter Project ID:</label>
-                            <input type="text" id="projId">
-                            <button onclick="fetchDataPolicy()">Get Data</button>
-
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="data-table-policy" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>proj_id</th>
-                                            <th>policy_id</th>
-                                            <th>unique_sub_policy_id</th>
-                                            <th>sub_policy_id</th>
-                                            <th>sub_policy_name</th>
-                                            <th>sub_policy_start_date</th>
-                                            <th>sub_policy_end_date</th>
-                                            <th>sub_policy_nav_start</th>
-                                            <th>risk_level</th>
-                                            <th>foreign_risk_level</th>
-                                            <th>aimc_type</th>
-                                            <th>objective</th>
-                                            <th>mf_invest_flag</th>
-                                            <th>new_member_offer</th>
-                                            <th>last_upd_date</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>proj_id</th>
-                                            <th>policy_id</th>
-                                            <th>unique_sub_policy_id</th>
-                                            <th>sub_policy_id</th>
-                                            <th>sub_policy_name</th>
-                                            <th>sub_policy_start_date</th>
-                                            <th>sub_policy_end_date</th>
-                                            <th>sub_policy_nav_start</th>
-                                            <th>risk_level</th>
-                                            <th>foreign_risk_level</th>
-                                            <th>aimc_type</th>
-                                            <th>objective</th>
-                                            <th>mf_invest_flag</th>
-                                            <th>new_member_offer</th>
-                                            <th>last_upd_date</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody id="table-body-policy">
-
-                                    </tbody>
-                                </table>
-                                <!-- Pagination buttons -->
-                                <button id="prevButtonUnder">Previous</button>
-                                <button id="nextButtonUnder">Next</button>
-
-                                <!-- Add an export button -->
-                                <button class="btn btn-success btn-sm" onclick="exportToXLSXPolicy()">Export to
-                                    XLSX</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
+                <form id="reportForm">
+                    <label for="intermediaryName">Intermediary Name:</label>
+                    <input type="text" id="intermediaryName" required>
+            
+                    <label for="period">Period:</label>
+                    <input type="text" id="period" placeholder="YYYY-MM-DD to YYYY-MM-DD" required>
+            
+                    <button type="button" onclick="generateReport()">Generate Report</button>
+                </form>
+            
+                <table id="reportTable">
+                    <!-- Table headers will be added here dynamically -->
+                </table>
             </div>
 
-            <!-- Content -->
-            <div id="content">
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+            
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">ผลตอบแทนย้อนหลัง</h1>
-                    <p class="mb-4">ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ <a target="_blank"
-                            href="https://api-portal.sec.or.th/product#product=pvd-factsheet-dev">PVD Factsheet</a>.<br>
-                        เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
-                        - กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
-                        - กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
-                    </p>
+            
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">SEC API Thailand Report</h6>
-                        </div>
-                        <div class="card-body">
+            
 
-                            <label for="projId">Enter Project ID:</label>
-                            <input type="text" id="projId">
-                            <button onclick="fetchDataReturn()">Get Data</button>
-
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="data-table-return" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>proj_id</th>
-                                            <th>policy_id</th>
-                                            <th>unique_sub_policy_id</th>
-                                            <th>seq</th>
-                                            <th>return_year</th>
-                                            <th>return_rate</th>
-                                            <th>last_upd_date</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>proj_id</th>
-                                            <th>policy_id</th>
-                                            <th>unique_sub_policy_id</th>
-                                            <th>seq</th>
-                                            <th>return_year</th>
-                                            <th>return_rate</th>
-                                            <th>last_upd_date</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody id="table-body-return">
-
-                                    </tbody>
-                                </table>
-                                <!-- Pagination buttons -->
-                                <button id="prevButtonUnder">Previous</button>
-                                <button id="nextButtonUnder">Next</button>
-
-                                <!-- Add an export button -->
-                                <button class="btn btn-success btn-sm" onclick="exportToXLSXReturn()">Export to
-                                    XLSX</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-
-            <!-- Content -->
-            <div id="content">
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">ค่าธรรมเนียม</h1>
-                    <p class="mb-4">ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ <a target="_blank"
-                            href="https://api-portal.sec.or.th/product#product=pvd-factsheet-dev">PVD Factsheet</a>.<br>
-                        เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
-                        - กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
-                        - กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
-                    </p>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">SEC API Thailand Report</h6>
-                        </div>
-                        <div class="card-body">
-
-                            <label for="projId">Enter Project ID:</label>
-                            <input type="text" id="projId">
-                            <button onclick="fetchDataFee()">Get Data</button>
-
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="data-table-fee" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>proj_id</th>
-                                            <th>policy_id</th>
-                                            <th>unique_sub_policy_id</th>
-                                            <th>seq</th>
-                                            <th>fee_type_desc</th>
-                                            <th>fee_rate</th>
-                                            <th>last_upd_date</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>proj_id</th>
-                                            <th>policy_id</th>
-                                            <th>unique_sub_policy_id</th>
-                                            <th>seq</th>
-                                            <th>fee_type_desc</th>
-                                            <th>fee_rate</th>
-                                            <th>last_upd_date</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody id="table-body-fee">
-
-                                    </tbody>
-                                </table>
-                                <!-- Pagination buttons -->
-                                <button id="prevButtonUnder">Previous</button>
-                                <button id="nextButtonUnder">Next</button>
-
-                                <!-- Add an export button -->
-                                <button class="btn btn-success btn-sm" onclick="exportToXLSXFee()">Export to
-                                    XLSX</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-
-            <!-- Content -->
-            <div id="content">
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">สัดส่วนของการลงทุนของกองทุนสำรองเลี้ยงชีพ</h1>
-                    <p class="mb-4">ข้อมูลเกี่ยวกับกองทุนสำรองเลี้ยงชีพ <a target="_blank"
-                            href="https://api-portal.sec.or.th/product#product=pvd-factsheet-dev">PVD Factsheet</a>.<br>
-                        เฉพาะกองทุนสำรองเลี้ยงชีพประเภท<br>
-                        - กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
-                        - กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
-                    </p>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">SEC API Thailand Report</h6>
-                        </div>
-                        <div class="card-body">
-
-                            <label for="projId">Enter Project ID:</label>
-                            <input type="text" id="projId">
-                            <label for="period">Enter Period:</label>
-                            <input type="text" id="period">
-                            <button onclick="fetchDataPeriod()">Get Data</button>
-
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="data-table-period" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>period</th>
-                                            <th>proj_id</th>
-                                            <th>assetliab_code</th>
-                                            <th>market_value</th>
-                                            <th>nav</th>
-                                            <th>percent_nav</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>period</th>
-                                            <th>proj_id</th>
-                                            <th>assetliab_code</th>
-                                            <th>market_value</th>
-                                            <th>nav</th>
-                                            <th>percent_nav</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody id="table-body-period">
-
-                                    </tbody>
-                                </table>
-                                <!-- Pagination buttons -->
-                                <button id="prevButtonUnder">Previous</button>
-                                <button id="nextButtonUnder">Next</button>
-
-                                <!-- Add an export button -->
-                                <button class="btn btn-success btn-sm" onclick="exportToXLSXPeriod()">Export to
-                                    XLSX</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-            </div>
+            
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -829,205 +566,60 @@
     </div>
 
     <script>
-        function fetchDataPeriod() {
-            const projId = document.getElementById('projId').value;
+        function generateReport() {
+            const intermediaryName = document.getElementById('intermediaryName').value;
             const period = document.getElementById('period').value;
 
-            // Replace 'xxx' with your actual subscription key
-            const subscriptionPe = '8c89b764b1654cfab1834eb9c105be05';
+            const requestBody = {
+                "IntermediaryName": intermediaryName,
+                // Add other properties related to the period if needed
+            };
 
-            fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/PVDFullPort/${period}`, {
+            fetch('https://api.sec.or.th/DigitalAsset/profile/intermediary', {
+                method: 'POST',
                 headers: {
-                    'Ocp-Apim-Subscription-Key': subscriptionPe
-                }
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Ocp-Apim-Subscription-Key': 'f6ebd5f698b342968e931fa3b8cee02b',
+                },
+                body: JSON.stringify(requestBody),
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    displayDataPe(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    // Handle error display or logging
-                });
-        }
-
-        function displayDataPe(data) {
-            const tableBody = document.getElementById('table-body-period');
-            tableBody.innerHTML = ''; // Clear previous table content
-
-            // Loop through the data and populate the table
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-            <td>${item.period}</td>
-            <td>${item.proj_id}</td>
-            <td>${item.assetliab_code}</td>
-            <td>${item.market_value}</td>
-            <td>${item.nav}</td>
-            <td>${item.percent_nav}</td>
-        `;
-                tableBody.appendChild(row);
+            .then(response => response.json())
+            .then(data => {
+                displayReportTable(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
             });
         }
 
-    </script>
+        function displayReportTable(data) {
+            const tableHeaders = ['unique_id', 'name_th', 'name_en', 'lic_code', 'lic_action_code', 'lic_efft_date', 'lic_exp_date'];
 
-    <script>
-        function fetchDataFee() {
-            const projId = document.getElementById('projId').value;
+            const table = document.getElementById('reportTable');
+            table.innerHTML = ''; // Clear previous content
 
-            // Replace 'xxx' with your actual subscription key
-            const subscriptionFee = '8c89b764b1654cfab1834eb9c105be05';
+            const headerRow = document.createElement('tr');
+            tableHeaders.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            table.appendChild(headerRow);
 
-            fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/fee`, {
-                headers: {
-                    'Ocp-Apim-Subscription-Key': subscriptionFee
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    displayDataFee(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    // Handle error display or logging
-                });
-        }
-
-        function displayDataFee(data) {
-            const tableBody = document.getElementById('table-body-fee');
-            tableBody.innerHTML = ''; // Clear previous table content
-
-            // Loop through the data and populate the table
-            data.forEach(item => {
+            data.forEach(entry => {
                 const row = document.createElement('tr');
-                row.innerHTML = `
-            <td>${item.proj_id}</td>
-            <td>${item.policy_id}</td>
-            <td>${item.unique_sub_policy_id}</td>
-            <td>${item.seq}</td>
-            <td>${item.fee_type_desc}</td>
-            <td>${item.fee_rate}</td>
-            <td>${item.last_upd_date}</td>
-        `;
-                tableBody.appendChild(row);
+                tableHeaders.forEach(header => {
+                    const td = document.createElement('td');
+                    td.textContent = entry[header];
+                    row.appendChild(td);
+                });
+                table.appendChild(row);
             });
         }
-
     </script>
 
-    <script>
-        function fetchDataReturn() {
-            const projId = document.getElementById('projId').value;
-
-            // Replace 'xxx' with your actual subscription key
-            const subscriptionReturn = '8c89b764b1654cfab1834eb9c105be05';
-
-            fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/return`, {
-                headers: {
-                    'Ocp-Apim-Subscription-Key': subscriptionReturn
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    displayDataReturn(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    // Handle error display or logging
-                });
-        }
-
-        function displayDataReturn(data) {
-            const tableBody = document.getElementById('table-body-return');
-            tableBody.innerHTML = ''; // Clear previous table content
-
-            // Loop through the data and populate the table
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-            <td>${item.proj_id}</td>
-            <td>${item.policy_id}</td>
-            <td>${item.unique_sub_policy_id}</td>
-            <td>${item.seq}</td>
-            <td>${item.return_year}</td>
-            <td>${item.return_rate}</td>
-            <td>${item.last_upd_date}</td>
-        `;
-                tableBody.appendChild(row);
-            });
-        }
-
-    </script>
-
-    <script>
-        function fetchDataPolicy() {
-            const projId = document.getElementById('projId').value;
-
-            // Replace 'xxx' with your actual subscription key
-            const subscriptionPolicy = '8c89b764b1654cfab1834eb9c105be05';
-
-            fetch(`https://api.sec.or.th/pvd/factsheet/${projId}/policy`, {
-                headers: {
-                    'Ocp-Apim-Subscription-Key': subscriptionPolicy
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    displayDataPolicy(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    // Handle error display or logging
-                });
-        }
-
-        function displayDataPolicy(data) {
-            const tableBody = document.getElementById('table-body-policy');
-            tableBody.innerHTML = ''; // Clear previous table content
-
-            // Loop through the data and populate the table
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-            <td>${item.proj_id}</td>
-            <td>${item.policy_id}</td>
-            <td>${item.unique_sub_policy_id}</td>
-            <td>${item.sub_policy_id}</td>
-            <td>${item.sub_policy_name}</td>
-            <td>${item.sub_policy_start_date}</td>
-            <td>${item.sub_policy_end_date}</td>
-            <td>${item.sub_policy_nav_start}</td>
-            <td>${item.risk_level}</td>
-            <td>${item.foreign_risk_level}</td>
-            <td>${item.aimc_type}</td>
-            <td>${item.objective}</td>
-            <td>${item.mf_invest_flag}</td>
-            <td>${item.new_member_offer}</td>
-            <td>${item.last_upd_date}</td>
-        `;
-                tableBody.appendChild(row);
-            });
-        }
-
-    </script>
-
-
+    
 
 
 
@@ -1115,142 +707,6 @@
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
-    </script>
-
-    <script>
-        function exportToXLSXFee() {
-            const table = document.getElementById('data-table-fee'); // Assuming your table has id="data-table"
-            const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
-            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-            function s2ab(s) {
-                const buf = new ArrayBuffer(s.length);
-                const view = new Uint8Array(buf);
-                for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-                return buf;
-            }
-
-            const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-
-            /* 
-              Create a link element and trigger a download programmatically.
-              This will prompt the user to save the generated XLSX file.
-            */
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'SEC_API_Thailand_Report.xlsx';
-            link.click();
-        }
-
-    </script>
-
-<script>
-    function exportToXLSXPeriod() {
-        const table = document.getElementById('data-table-period'); // Assuming your table has id="data-table"
-        const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
-        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-        function s2ab(s) {
-            const buf = new ArrayBuffer(s.length);
-            const view = new Uint8Array(buf);
-            for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-            return buf;
-        }
-
-        const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-
-        /* 
-          Create a link element and trigger a download programmatically.
-          This will prompt the user to save the generated XLSX file.
-        */
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'SEC_API_Thailand_Report.xlsx';
-        link.click();
-    }
-
-</script>
-
-    <script>
-        function exportToXLSX() {
-            const table = document.getElementById('data-table'); // Assuming your table has id="data-table"
-            const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
-            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-            function s2ab(s) {
-                const buf = new ArrayBuffer(s.length);
-                const view = new Uint8Array(buf);
-                for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-                return buf;
-            }
-
-            const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-
-            /* 
-              Create a link element and trigger a download programmatically.
-              This will prompt the user to save the generated XLSX file.
-            */
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'SEC_API_Thailand_Report.xlsx';
-            link.click();
-        }
-
-    </script>
-
-
-    <script>
-        function exportToXLSXReturn() {
-            const table = document.getElementById('data-table-return'); // Assuming your table has id="data-table"
-            const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
-            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-            function s2ab(s) {
-                const buf = new ArrayBuffer(s.length);
-                const view = new Uint8Array(buf);
-                for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-                return buf;
-            }
-
-            const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-
-            /* 
-              Create a link element and trigger a download programmatically.
-              This will prompt the user to save the generated XLSX file.
-            */
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'SEC_API_Thailand_Report.xlsx';
-            link.click();
-        }
-
-    </script>
-
-    <script>
-        function exportToXLSXUnder() {
-            const table = document.getElementById('data-table-under'); // Assuming your table has id="data-table"
-            const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet JS' });
-            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-            function s2ab(s) {
-                const buf = new ArrayBuffer(s.length);
-                const view = new Uint8Array(buf);
-                for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-                return buf;
-            }
-
-            const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-
-            /* 
-              Create a link element and trigger a download programmatically.
-              This will prompt the user to save the generated XLSX file.
-            */
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'SEC_API_Thailand_Report.xlsx';
-            link.click();
-        }
-
     </script>
 
     <script>
