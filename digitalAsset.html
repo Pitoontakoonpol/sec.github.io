@@ -434,10 +434,6 @@
                 <form id="reportForm">
                     <label for="intermediaryName">Intermediary Name:</label>
                     <input type="text" id="intermediaryName" required>
-            
-                    <label for="period">Period:</label>
-                    <input type="text" id="period" placeholder="YYYY-MM-DD to YYYY-MM-DD" required>
-            
                     <button type="button" onclick="generateReport()">Generate Report</button>
                 </form>
             
@@ -498,11 +494,9 @@
     <script>
         function generateReport() {
             const intermediaryName = document.getElementById('intermediaryName').value;
-            const period = document.getElementById('period').value;
 
             const requestBody = {
                 "IntermediaryName": intermediaryName,
-                // Add other properties related to the period if needed
             };
 
             fetch('https://api.sec.or.th/DigitalAsset/profile/intermediary', {
