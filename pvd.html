@@ -600,7 +600,7 @@
     <script>
         function fetchDataPVDUnder() {
             // Make the API request
-            const uniqueId = '{unique_id}';
+            const uniqueId = $('#uniqueId').val();
             $.ajax({
                 url: 'https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund',
                 method: 'GET',
@@ -609,7 +609,6 @@
                     'Ocp-Apim-Subscription-Key': 'f0ecccb076d5441cab72c1f48998e11b'
                 },
                 success: function (data) {
-                    $('#uniqueId').text(uniqueId);
                     // Update the table with the received data
                     var tbody = $('#dataPVDUnder tbody');
                     $.each(data, function (index, item) {
