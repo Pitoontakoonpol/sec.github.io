@@ -425,6 +425,7 @@
                             <div class="table-responsive">
                                 <label for="uniqueId">Unique ID:</label>
                                 <input type="text" id="uniqueId" readonly>
+                                <button id="submitButton">Submit</button>
                                 <table class="table table-bordered" id="dataPVDUnder" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -597,7 +598,7 @@
 
 <!-- กองทุนภายใต้การบริหารจัดการของบริษัทหลักทรัพย์จัดการกองทุน -->
     <script>
-        $(document).ready(function () {
+        $(document).ready(function fetchDataPVDUnder() {
             // Make the API request
             const uniqueId = '{unique_id}';
             $.ajax({
@@ -631,6 +632,7 @@
                 }
             });
         });
+        $('#submitButton').on('click', fetchDataPVDUnder);
 
         $(document).ready(function () {
             // Export to Excel button click event
