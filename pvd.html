@@ -403,7 +403,7 @@
                                             <th>last_upd_date</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
+                                    <tbody id="dataTableContans">
                                         
                                     </tbody>
                                 </table>
@@ -477,8 +477,8 @@
 
 
     <script>
-        // Fetch data from the SEC Thailand API
-        async function fetchData() {
+        // Fetch data from the SEC Thailand API and populate the specified tbody
+        async function fetchDataAndPopulateTable() {
             const url = "https://api.sec.or.th/pvd/factsheet/amc";
             const headers = {
                 "Cache-Control": "no-cache",
@@ -489,17 +489,21 @@
                 const response = await fetch(url, { headers });
                 const data = await response.json();
     
-                // Update the HTML table with the fetched data
-                updateTable(data);
+                // Populate the specified HTML tbody with the fetched data
+                populateTable(data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         }
     
-        // Update the HTML table with data
-        function updateTable(data) {
-            const tableBody = document.querySelector("#dataTable tbody");
+        // Populate the specified HTML tbody with data
+        function populateTable(data) {
+            const tbody = document.getElementById("dataTableContans");
     
+            // Clear existing rows
+            tbody.innerHTML = "";
+    
+            // Insert new rows
             data.forEach(entry => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
@@ -509,12 +513,12 @@
                     <td>${entry.abbr_name}</td>
                     <td>${entry.last_upd_date}</td>
                 `;
-                tableBody.appendChild(row);
+                tbody.appendChild(row);
             });
         }
     
-        // Fetch data when the page loads
-        fetchData();
+        // Fetch data and populate the tbody when the page loads
+        fetchDataAndPopulateTable();
     </script>
 
 
