@@ -477,29 +477,33 @@
 
 
     <script>
-        // Fetch data from the SEC Thailand API
-        async function fetchData() {
+        // Fetch data from the SEC Thailand API and update the existing table
+        async function fetchDataAndUpdateTable() {
             const url = "https://api.sec.or.th/pvd/factsheet/amc";
             const headers = {
                 "Cache-Control": "no-cache",
-                "Ocp-Apim-Subscription-Key": "f0ecccb076d5441cab72c1f48998e11b"
+                "Ocp-Apim-Subscription-Key": "••••••••••••••••••••••••••••••••"
             };
     
             try {
                 const response = await fetch(url, { headers });
                 const data = await response.json();
     
-                // Update the HTML table with the fetched data
+                // Update the existing HTML table with the fetched data
                 updateTable(data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         }
     
-        // Update the HTML table with data
+        // Update the existing HTML table with data
         function updateTable(data) {
             const tableBody = document.querySelector("#dataTable tbody");
     
+            // Clear existing rows
+            tableBody.innerHTML = "";
+    
+            // Insert new rows
             data.forEach(entry => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
@@ -513,8 +517,8 @@
             });
         }
     
-        // Fetch data when the page loads
-        fetchData();
+        // Fetch data and update the table when the page loads
+        fetchDataAndUpdateTable();
     </script>
 
 
