@@ -407,6 +407,7 @@
                                         
                                     </tbody>
                                 </table>
+                                <button id="exportButton">Export to Excel</button>
                             </div>
                         </div>
                     </div>
@@ -503,6 +504,18 @@
                 error: function(error) {
                     console.log('Error:', error);
                 }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Make the API request and update the table (same as before)...
+    
+            // Export to Excel button click event
+            $('#exportButton').on('click', function() {
+                $("#dataTables").table2excel({
+                    filename: "table.xls"
+                });
             });
         });
     </script>
