@@ -282,7 +282,8 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                            alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -293,7 +294,8 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                            alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -304,7 +306,8 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                            alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -336,7 +339,8 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -374,8 +378,7 @@
                     <p class="mb-4">เฉพาะกองทุนสำรองเลี้ยงชีพประเภท <br>
                         - กองทุนหลายนายจ้างที่มีนโยบายเดียว (Pooled Fund)<br>
                         - กองทุนหลายนายจ้างที่มีหลายนโยบาย (Master Pooled Fund)<br>
-                        <a target="_blank" href="https://api-portal.sec.or.th/">ศึกษารายละเอียดเพิ่มเติมได้ที่นี้</a>.
-                    </p>
+                        <a target="_blank" href="https://api-portal.sec.or.th/">ศึกษารายละเอียดเพิ่มเติมได้ที่นี้</a>.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -387,7 +390,6 @@
                                 <table class="table table-bordered" id="dataTables" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>no</th>
                                             <th>unique_id</th>
                                             <th>name_th</th>
                                             <th>name_en</th>
@@ -397,7 +399,6 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>no</th>
                                             <th>unique_id</th>
                                             <th>name_th</th>
                                             <th>name_en</th>
@@ -406,12 +407,10 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-
+                                        
                                     </tbody>
                                 </table>
-                                <button id="loadMore">Load More</button>
-                                <button id="exportButton" style="background-color: #1cc88a; color: #fff;">Export to
-                                    Excel</button>
+                                <button id="exportButton" style="background-color: #1cc88a; color: #fff;">Export to Excel</button>
                             </div>
                         </div>
                     </div>
@@ -482,86 +481,71 @@
 
 
     <script>
-        $(document).ready(function () {
-            var apiURL = 'https://api.sec.or.th/pvd/factsheet/amc';
-            var start = 0;
-            var pageSize = 10;
+        $(document).ready(function() {
+            // Make the API request
+            $.ajax({
+                url: 'https://api.sec.or.th/pvd/factsheet/amc',
+                method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Ocp-Apim-Subscription-Key': 'f0ecccb076d5441cab72c1f48998e11b'
+                },
+                success: function(data) {
+                    // Update the table with the received data
+                    var tbody = $('#dataTables tbody');
+                    $.each(data, function(index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.unique_id + '</td>' +
+                            '<td>' + item.name_th + '</td>' +
+                            '<td>' + item.name_en + '</td>' +
+                            '<td>' + item.abbr_name + '</td>' +
+                            '<td>' + item.last_upd_date + '</td>' +
+                            '</tr>';
+                        tbody.append(row);
+                    });
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        });
+        
+        $(document).ready(function() {
+        // Export to Excel button click event
+        $('#exportButton').on('click', function() {
+            // Get the data from the table
+            var table = document.getElementById('dataTables');
+            var rows = table.rows;
+            var data = [];
 
-            // Function to fetch and display data
-            function fetchData(start, pageSize) {
-                $.ajax({
-                    url: apiURL,
-                    type: 'GET',
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Ocp-Apim-Subscription-Key': 'f0ecccb076d5441cab72c1f48998e11b'
-                    },
-                    data: {
-                        '$top': pageSize,
-                        '$skip': start
-                    },
-                    success: function (data) {
-                        // Append data to the table
-                        $.each(data.value, function (index, item) {
-                            var rowNumber = start + index + 1;
-                            $('#dataTables tbody').append('<tr><td>' + rowNumber + '</td><td>' + item.unique_id + '</td><td>' + item.name_th + '</td><td>' + item.name_en + '</td><td>' + item.abbr_name + '</td><td>' + item.last_upd_date + '</td></tr>');
-                        });
-
-                        // Initialize DataTables
-                        $('#dataTables').DataTable();
-                    },
-                    error: function (error) {
-                        console.log('Error fetching data:', error);
-                    }
-                });
+            // Iterate through rows and cells to build the data array
+            for (var i = 1; i < rows.length; i++) { // Start from 1 to skip header row
+                var row = rows[i];
+                var rowData = [];
+                for (var j = 0; j < row.cells.length; j++) {
+                    rowData.push(row.cells[j].innerText);
+                }
+                data.push(rowData);
             }
 
-            // Initial fetch
-            fetchData(start, pageSize);
+            // Create a worksheet
+            var ws = XLSX.utils.aoa_to_sheet([['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date']].concat(data));
 
-            // Load more button click event
-            $('#loadMore').on('click', function () {
-                start += pageSize;
-                fetchData(start, pageSize);
-            });
+            // Create a workbook
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet 1');
+
+            // Generate a formatted date and time string
+            var now = new Date();
+            var formattedDateTime = now.toISOString().slice(0, 19).replace("T", "_").replace(/:/g, "-");
+
+            // Append the formatted date and time to the filename
+            var filename = 'PVD_list_' + formattedDateTime + '.xlsx';
+
+            // Save to file
+            XLSX.writeFile(wb, filename);
         });
-
-        $(document).ready(function () {
-            // Export to Excel button click event
-            $('#exportButton').on('click', function () {
-                // Get the data from the table
-                var table = document.getElementById('dataTables');
-                var rows = table.rows;
-                var data = [];
-
-                // Iterate through rows and cells to build the data array
-                for (var i = 1; i < rows.length; i++) { // Start from 1 to skip header row
-                    var row = rows[i];
-                    var rowData = [];
-                    for (var j = 0; j < row.cells.length; j++) {
-                        rowData.push(row.cells[j].innerText);
-                    }
-                    data.push(rowData);
-                }
-
-                // Create a worksheet
-                var ws = XLSX.utils.aoa_to_sheet([['unique_id', 'name_th', 'name_en', 'abbr_name', 'last_upd_date']].concat(data));
-
-                // Create a workbook
-                var wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, 'Sheet 1');
-
-                // Generate a formatted date and time string
-                var now = new Date();
-                var formattedDateTime = now.toISOString().slice(0, 19).replace("T", "_").replace(/:/g, "-");
-
-                // Append the formatted date and time to the filename
-                var filename = 'PVD_list_' + formattedDateTime + '.xlsx';
-
-                // Save to file
-                XLSX.writeFile(wb, filename);
-            });
-        });
+    });
     </script>
 
 
