@@ -390,6 +390,7 @@
                                 <table class="table table-bordered" id="dataTables" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>no</th>
                                             <th>unique_id</th>
                                             <th>name_th</th>
                                             <th>name_en</th>
@@ -399,6 +400,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>no</th>
                                             <th>unique_id</th>
                                             <th>name_th</th>
                                             <th>name_en</th>
@@ -495,6 +497,7 @@
                     var tbody = $('#dataTables tbody');
                     $.each(data, function(index, item) {
                         var row = '<tr>' +
+                            '<td>' + item.no + '</td>' +
                             '<td>' + item.unique_id + '</td>' +
                             '<td>' + item.name_th + '</td>' +
                             '<td>' + item.name_en + '</td>' +
