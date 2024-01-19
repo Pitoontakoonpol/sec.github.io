@@ -527,7 +527,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-<!-- รายชื่อบริษัทหลักทรัพย์จัดการกองทุน -->
+    <!-- รายชื่อบริษัทหลักทรัพย์จัดการกองทุน -->
     <script>
         $(document).ready(function () {
             // Make the API request
@@ -596,13 +596,13 @@
         });
     </script>
 
-<!-- กองทุนภายใต้การบริหารจัดการของบริษัทหลักทรัพย์จัดการกองทุน -->
+    <!-- กองทุนภายใต้การบริหารจัดการของบริษัทหลักทรัพย์จัดการกองทุน -->
     <script>
         function fetchDataPVDUnder() {
             // Make the API request
             const uniqueId = $('#uniqueId').val();
             $.ajax({
-                url: 'https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund',
+                url: `https://api.sec.or.th/pvd/factsheet/${uniqueId}/fund`, // Use backticks here
                 method: 'GET',
                 headers: {
                     'Cache-Control': 'no-cache',
@@ -630,8 +630,10 @@
                     console.log('Error:', error);
                 }
             });
-        };
+        }
+
         $('#submitButton').on('click', fetchDataPVDUnder);
+
 
         $(document).ready(function () {
             // Export to Excel button click event
