@@ -384,7 +384,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTables" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>unique_id</th>
@@ -403,7 +403,7 @@
                                             <th>last_upd_date</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody id="amcTableBody">
+                                    <tbody>
                                         
                                     </tbody>
                                 </table>
@@ -477,37 +477,33 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const url = "https://api.sec.or.th/pvd/factsheet/amc";
-            const subscriptionKey = "f0ecccb076d5441cab72c1f48998e11b";
-            const tableBody = document.getElementById("amcTableBody");
-            
-            fetch(url, {
+        $(document).ready(function() {
+            // Make the API request
+            $.ajax({
+                url: 'https://api.sec.or.th/pvd/factsheet/amc',
+                method: 'GET',
                 headers: {
-                    "Cache-Control": "no-cache",
-                    "Ocp-Apim-Subscription-Key": subscriptionKey
+                    'Cache-Control': 'no-cache',
+                    'Ocp-Apim-Subscription-Key': 'f0ecccb076d5441cab72c1f48998e11b'
+                },
+                success: function(data) {
+                    // Update the table with the received data
+                    var tbody = $('#dataTables tbody');
+                    $.each(data, function(index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.unique_id + '</td>' +
+                            '<td>' + item.name_th + '</td>' +
+                            '<td>' + item.name_en + '</td>' +
+                            '<td>' + item.abbr_name + '</td>' +
+                            '<td>' + item.last_upd_date + '</td>' +
+                            '</tr>';
+                        tbody.append(row);
+                    });
+                },
+                error: function(error) {
+                    console.log('Error:', error);
                 }
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Assuming data is an array of objects
-                
-                // Clear existing content
-                tableBody.innerHTML = "";
-                
-                data.forEach(entry => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${entry.unique_id}</td>
-                        <td>${entry.name_th}</td>
-                        <td>${entry.name_en}</td>
-                        <td>${entry.abbr_name}</td>
-                        <td>${entry.last_upd_date}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(error => console.error("Error fetching data:", error));
+            });
         });
     </script>
 
