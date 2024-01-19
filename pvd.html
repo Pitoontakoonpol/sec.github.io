@@ -598,7 +598,7 @@
 
 <!-- กองทุนภายใต้การบริหารจัดการของบริษัทหลักทรัพย์จัดการกองทุน -->
     <script>
-        $(document).ready(function fetchDataPVDUnder() {
+        function fetchDataPVDUnder() {
             // Make the API request
             const uniqueId = '{unique_id}';
             $.ajax({
@@ -631,7 +631,7 @@
                     console.log('Error:', error);
                 }
             });
-        });
+        };
         $('#submitButton').on('click', fetchDataPVDUnder);
 
         $(document).ready(function () {
