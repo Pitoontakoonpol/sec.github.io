@@ -403,7 +403,7 @@
                                             <th>last_upd_date</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
+                                    <tbody id="amcTableBody">
                                         
                                     </tbody>
                                 </table>
@@ -477,48 +477,38 @@
 
 
     <script>
-        // Fetch data from the SEC Thailand API and update the existing table
-        async function fetchDataAndUpdateTable() {
+        document.addEventListener("DOMContentLoaded", function () {
             const url = "https://api.sec.or.th/pvd/factsheet/amc";
-            const headers = {
-                "Cache-Control": "no-cache",
-                "Ocp-Apim-Subscription-Key": "f0ecccb076d5441cab72c1f48998e11b"
-            };
-    
-            try {
-                const response = await fetch(url, { headers });
-                const data = await response.json();
-    
-                // Update the existing HTML table with the fetched data
-                updateTable(data);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        }
-    
-        // Update the existing HTML table with data
-        function updateTable(data) {
-            const tableBody = document.querySelector("#dataTables tbody");
-    
-            // Clear existing rows
-            tableBody.innerHTML = "";
-    
-            // Insert new rows
-            data.forEach(entry => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${entry.unique_id}</td>
-                    <td>${entry.name_th}</td>
-                    <td>${entry.name_en}</td>
-                    <td>${entry.abbr_name}</td>
-                    <td>${entry.last_upd_date}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-    
-        // Fetch data and update the table when the page loads
-        fetchDataAndUpdateTable();
+            const subscriptionKey = "f0ecccb076d5441cab72c1f48998e11b";
+            const tableBody = document.getElementById("amcTableBody");
+            
+            fetch(url, {
+                headers: {
+                    "Cache-Control": "no-cache",
+                    "Ocp-Apim-Subscription-Key": subscriptionKey
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Assuming data is an array of objects
+                
+                // Clear existing content
+                tableBody.innerHTML = "";
+                
+                data.forEach(entry => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${entry.unique_id}</td>
+                        <td>${entry.name_th}</td>
+                        <td>${entry.name_en}</td>
+                        <td>${entry.abbr_name}</td>
+                        <td>${entry.last_upd_date}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error("Error fetching data:", error));
+        });
     </script>
 
 
