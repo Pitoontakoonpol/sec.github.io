@@ -482,7 +482,6 @@
                             <table class="table table-bordered" id="dataPVDProlicy" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>last_upd_date</th>
                                         <th>proj_id</th>
                                         <th>policy_id</th>
                                         <th>unique_sub_policy_id</th>
@@ -497,11 +496,11 @@
                                         <th>objective</th>
                                         <th>mf_invest_flag</th>
                                         <th>new_member_offer</th>
+                                        <th>last_upd_date</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>last_upd_date</th>
                                         <th>proj_id</th>
                                         <th>policy_id</th>
                                         <th>unique_sub_policy_id</th>
@@ -516,6 +515,7 @@
                                         <th>objective</th>
                                         <th>mf_invest_flag</th>
                                         <th>new_member_offer</th>
+                                        <th>last_upd_date</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -755,7 +755,6 @@
                     var tbody = $('#dataPVDProlicy tbody');
                     $.each(data, function (index, item) {
                         var row = '<tr>' +
-                            '<td>' + item.last_upd_date + '</td>' +
                             '<td>' + item.proj_id + '</td>' +
                             '<td>' + item.policy_id + '</td>' +
                             '<td>' + item.unique_sub_policy_id + '</td>' +
@@ -770,6 +769,7 @@
                             '<td>' + item.objective + '</td>' +
                             '<td>' + item.mf_invest_flag + '</td>' +
                             '<td>' + item.new_member_offer + '</td>' +
+                            '<td>' + item.last_upd_date + '</td>' +
                             '</tr>';
                         tbody.append(row);
                     });
@@ -803,7 +803,6 @@
 
                 // Create a worksheet
                 var ws = XLSX.utils.aoa_to_sheet([[
-                    'last_upd_date', 
                     'proj_id', 
                     'policy_id', 
                     'unique_sub_policy_id', 
@@ -818,6 +817,7 @@
                     'objective', 
                     'mf_invest_flag', 
                     'new_member_offer',
+                    'last_upd_date', 
                 ]].concat(data));
 
                 // Create a workbook
