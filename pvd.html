@@ -29,27 +29,6 @@
 </head>
 
 <body id="page-top">
-    <style>
-        #pagination {
-            text-align: right;
-            margin-top: 10px;
-        }
-
-        #pagination button {
-            background-color: #1cc88a;
-            color: #fff;
-            border: 1px solid #1cc88a;
-            padding: 5px 10px;
-            margin: 0 5px;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-
-        #pagination button:hover {
-            background-color: #147d64;
-            border-color: #147d64;
-        }
-    </style>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -428,9 +407,6 @@
 
                                     </tbody>
                                 </table>
-                                <div id="pagination">
-                                    <!-- Pagination buttons will be dynamically added here -->
-                                </div>
                                 <button id="exportButton" style="background-color: #1cc88a; color: #fff;">Export to
                                     Excel</button>
                             </div>
@@ -683,45 +659,6 @@
                 XLSX.writeFile(wb, filename);
             });
         });
-
-        var totalRows = 1000;
-        var rowsPerPage = 10;
-        var totalPages = Math.ceil(totalRows / rowsPerPage);
-        var currentPage = 1;
-
-        function showPage(pageNumber) {
-            var rows = document.querySelectorAll("#dataTables tbody tr");
-
-            var startIndex = (pageNumber - 1) * rowsPerPage;
-            var endIndex = startIndex + rowsPerPage;
-
-            rows.forEach(function (row, index) {
-                if (index >= startIndex && index < endIndex) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-
-            currentPage = pageNumber;
-        }
-
-        function createPaginationButtons() {
-            var paginationDiv = document.getElementById("pagination");
-
-            for (var i = 1; i <= totalPages; i++) {
-                var button = document.createElement("button");
-                button.textContent = i;
-                button.onclick = function () {
-                    showPage(this.textContent);
-                };
-                paginationDiv.appendChild(button);
-            }
-        }
-
-        // Initially create and show the first page
-        createPaginationButtons();
-        showPage(currentPage);
     </script>
 
     <!-- กองทุนภายใต้การบริหารจัดการของบริษัทหลักทรัพย์จัดการกองทุน -->
