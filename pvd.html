@@ -413,7 +413,7 @@
                         </div>
                     </div>
 
-                    <hr>
+                    <br>
 
                     <!-- กองทุนภายใต้การบริหารจัดการของบริษัทหลักทรัพย์จัดการกองทุน -->
                     <div class="card shadow mb-4">
@@ -464,7 +464,69 @@
                         </div>
                     </div>
 
-                    
+                    <br>
+
+                    <!-- นโยบายการลงทุนของกองทุนสำรองเลี้ยงชีพ -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                นโยบายการลงทุนของกองทุนสำรองเลี้ยงชีพ</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <label for="proj_id">Proj ID:</label>
+                                <input type="text" id="proj_id">
+                                <button id="submitButtonPVDProlicy"
+                                    style="background-color: #4e73df; color: #fff;">Submit</button>
+                                <table class="table table-bordered" id="dataPVDProlicy" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>proj_id</th>
+                                            <th>policy_id</th>
+                                            <th>unique_sub_policy_id</th>
+                                            <th>sub_policy_id</th>
+                                            <th>sub_policy_name</th>
+                                            <th>sub_policy_start_date</th>
+                                            <th>sub_policy_end_date</th>
+                                            <th>sub_policy_nav_start</th>
+                                            <th>risk_level</th>
+                                            <th>foreign_risk_level</th>
+                                            <th>aimc_type</th>
+                                            <th>objective</th>
+                                            <th>mf_invest_flag</th>
+                                            <th>new_member_offer</th>
+                                            <th>last_upd_date</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>proj_id</th>
+                                            <th>policy_id</th>
+                                            <th>unique_sub_policy_id</th>
+                                            <th>sub_policy_id</th>
+                                            <th>sub_policy_name</th>
+                                            <th>sub_policy_start_date</th>
+                                            <th>sub_policy_end_date</th>
+                                            <th>sub_policy_nav_start</th>
+                                            <th>risk_level</th>
+                                            <th>foreign_risk_level</th>
+                                            <th>aimc_type</th>
+                                            <th>objective</th>
+                                            <th>mf_invest_flag</th>
+                                            <th>new_member_offer</th>
+                                            <th>last_upd_date</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <button id="exportButtonPVDProlicy"
+                                    style="background-color: #1cc88a; color: #fff;">Export
+                                    to Excel</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
             </div>
