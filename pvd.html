@@ -425,7 +425,8 @@
                             <div class="table-responsive">
                                 <label for="uniqueId">Unique ID:</label>
                                 <input type="text" id="uniqueId">
-                                <button id="submitButton" style="background-color: #4e73df; color: #fff;">Submit</button>
+                                <button id="submitButton"
+                                    style="background-color: #4e73df; color: #fff;">Submit</button>
                                 <table class="table table-bordered" id="dataPVDUnder" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -463,10 +464,7 @@
                         </div>
                     </div>
 
-                </div>
-                <!-- /.container-fluid -->
-
-                <hr>
+                    <hr>
 
                 <!-- นโยบายการลงทุนของกองทุนสำรองเลี้ยงชีพ -->
                 <div class="card shadow mb-4">
@@ -478,7 +476,8 @@
                         <div class="table-responsive">
                             <label for="proj_id">Proj ID:</label>
                             <input type="text" id="proj_id">
-                            <button id="submitButtonPVDProlicy" style="background-color: #4e73df; color: #fff;">Submit</button>
+                            <button id="submitButtonPVDProlicy"
+                                style="background-color: #4e73df; color: #fff;">Submit</button>
                             <table class="table table-bordered" id="dataPVDProlicy" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
@@ -528,24 +527,27 @@
                     </div>
                 </div>
 
+
+                </div>
+                <!-- /.container-fluid -->
             </div>
             <!-- /.container-fluid -->
 
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -803,21 +805,21 @@
 
                 // Create a worksheet
                 var ws = XLSX.utils.aoa_to_sheet([[
-                    'proj_id', 
-                    'policy_id', 
-                    'unique_sub_policy_id', 
-                    'sub_policy_id', 
-                    'sub_policy_name', 
-                    'sub_policy_start_date', 
-                    'sub_policy_end_date', 
+                    'proj_id',
+                    'policy_id',
+                    'unique_sub_policy_id',
+                    'sub_policy_id',
+                    'sub_policy_name',
+                    'sub_policy_start_date',
+                    'sub_policy_end_date',
                     'sub_policy_nav_start',
-                    'risk_level', 
-                    'foreign_risk_level', 
-                    'aimc_type', 
-                    'objective', 
-                    'mf_invest_flag', 
+                    'risk_level',
+                    'foreign_risk_level',
+                    'aimc_type',
+                    'objective',
+                    'mf_invest_flag',
                     'new_member_offer',
-                    'last_upd_date', 
+                    'last_upd_date',
                 ]].concat(data));
 
                 // Create a workbook
