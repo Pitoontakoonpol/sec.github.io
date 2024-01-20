@@ -407,6 +407,11 @@
 
                                     </tbody>
                                 </table>
+                                <div id="pagination">
+                                    <button onclick="showPage(1)">1</button>
+                                    <button onclick="showPage(2)">2</button>
+                                    <!-- Add more buttons as needed -->
+                                </div>
                                 <button id="exportButton" style="background-color: #1cc88a; color: #fff;">Export to
                                     Excel</button>
                             </div>
@@ -534,8 +539,6 @@
         </div>
         <!-- End of Main Content -->
 
-        
-
     </div>
     <!-- End of Content Wrapper -->
 
@@ -661,6 +664,29 @@
                 XLSX.writeFile(wb, filename);
             });
         });
+
+        var currentPage = 1;
+        var rowsPerPage = 10;
+
+        function showPage(pageNumber) {
+            var rows = document.querySelectorAll("#dataTables tbody tr");
+
+            var startIndex = (pageNumber - 1) * rowsPerPage;
+            var endIndex = startIndex + rowsPerPage;
+
+            rows.forEach(function (row, index) {
+                if (index >= startIndex && index < endIndex) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            currentPage = pageNumber;
+        }
+
+        // Initially show the first page
+        showPage(currentPage);
     </script>
 
     <!-- กองทุนภายใต้การบริหารจัดการของบริษัทหลักทรัพย์จัดการกองทุน -->
