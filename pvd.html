@@ -407,16 +407,11 @@
 
                                     </tbody>
                                 </table>
-                                <div class="col" id="pagination"
-                                    style="background-color: #ffffff; color: #ffffff; text-align: right;">
-                                    <button onclick="showPage(1)">1</button>
-                                    <button onclick="showPage(2)">2</button>
-                                    <!-- Add more buttons as needed -->
+                                <div id="pagination" style="text-align: right;">
+                                    <!-- Pagination buttons will be dynamically added here -->
                                 </div>
-                                <div class="col" id="exportButton"
-                                    style="background-color: #1cc88a; color: #fff; text-align: left;">
-                                    <button>Export toExcel</button>
-                                </div>
+                                <button id="exportButton" style="background-color: #1cc88a; color: #fff;">Export to
+                                    Excel</button>
                             </div>
                         </div>
                     </div>
@@ -668,8 +663,10 @@
             });
         });
 
-        var currentPage = 1;
+        var totalRows = 1000;
         var rowsPerPage = 10;
+        var totalPages = Math.ceil(totalRows / rowsPerPage);
+        var currentPage = 1;
 
         function showPage(pageNumber) {
             var rows = document.querySelectorAll("#dataTables tbody tr");
@@ -688,7 +685,21 @@
             currentPage = pageNumber;
         }
 
-        // Initially show the first page
+        function createPaginationButtons() {
+            var paginationDiv = document.getElementById("pagination");
+
+            for (var i = 1; i <= totalPages; i++) {
+                var button = document.createElement("button");
+                button.textContent = i;
+                button.onclick = function () {
+                    showPage(this.textContent);
+                };
+                paginationDiv.appendChild(button);
+            }
+        }
+
+        // Initially create and show the first page
+        createPaginationButtons();
         showPage(currentPage);
     </script>
 
